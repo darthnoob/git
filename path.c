@@ -9,6 +9,7 @@
 #include "worktree.h"
 #include "submodule-config.h"
 #include "path.h"
+#include "packfile.h"
 
 static int get_st_mode_bits(const char *path, int *mode)
 {
@@ -1319,6 +1320,11 @@ int is_ntfs_dotgit(const char *name)
 			name += len + 1;
 			len = -1;
 		}
+}
+
+int looks_like_command_line_option(const char *str)
+{
+	return str && str[0] == '-';
 }
 
 char *xdg_config_home(const char *filename)

@@ -425,7 +425,7 @@ static void load_subtree(struct notes_tree *t, struct leaf_node *subtree,
 	unsigned char type;
 	struct leaf_node *l;
 
-	buf = fill_tree_descriptor(&desc, subtree->val_oid.hash);
+	buf = fill_tree_descriptor(&desc, &subtree->val_oid);
 	if (!buf)
 		die("Could not read %s for notes-index",
 		     oid_to_hex(&subtree->val_oid));
@@ -1026,7 +1026,7 @@ void init_notes(struct notes_tree *t, const char *notes_ref,
 	t->dirty = 0;
 
 	if (flags & NOTES_INIT_EMPTY || !notes_ref ||
-	    get_sha1_treeish(notes_ref, object_oid.hash))
+	    get_oid_treeish(notes_ref, &object_oid))
 		return;
 	if (flags & NOTES_INIT_WRITABLE && read_ref(notes_ref, object_oid.hash))
 		die("Cannot use notes ref %s", notes_ref);
